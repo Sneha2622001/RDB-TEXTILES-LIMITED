@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('permanent_date');
             $table->date('retirement_date');
             $table->enum('nationality',['indian','other']);
-            $table->enum('religion',['hindu','muslim','christian','other']);
+            $table->string('religion');
             $table->date('anniv_date');
             $table->string('esi_no');
             $table->string('pf_no');

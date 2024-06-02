@@ -13,3 +13,4 @@ Route::get('/', [StaffController::class, 'view'])->name('staffs.view');
 Route::get('/staff/{id}/download-pdf', [StaffController::class, 'downloadPdf'])->name('staff.downloadPdf');
 Route::get('/staff/{id}/download-excel', [StaffController::class, 'downloadExcel'])->name('staff.downloadExcel');
 Route::get('/export/staff', [StaffController::class, 'exportAll'])->name('export.staff');
+Route::get('/staffs/download-pdf', [StaffController::class, 'downloadFilteredPdf'])->name('staffs.downloadFilteredPdf');

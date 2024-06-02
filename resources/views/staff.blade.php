@@ -122,10 +122,11 @@
                     <div class="mb-3">
                         <label for="religion" class="form-label">Religion</label>
                         <select class="form-select" id="religion" name="religion" required>
-                            <option value="hindu" {{isset($staff) && $staff->religion == 'hindu' ? 'selected': ''}}>HINDU</option>
-                            <option value="muslim" {{isset($staff) && $staff->religion == 'muslim' ? 'selected': ''}}>MUSLIM</option>
-                            <option value="christian" {{isset($staff) && $staff->religion == 'christian' ? 'selected': ''}}>CHRISTIAN</option>
-                            <option value="other" {{isset($staff) && $staff->religion == 'other' ? 'selected': ''}}>OTHER</option>
+                            @foreach($religions as $religion)
+                                <option value="{{ $religion->religion }}" {{ isset($staff) && $staff->religion == $religion->religion ? 'selected' : '' }}>
+                                    {{ strtoupper($religion->religion) }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
@@ -154,7 +155,7 @@
                         <label for="photo_path" class="form-label">Photo</label>
                         <input type="file" class="form-control" id="photo_path" name="photo_path">
                         <div class="image-preview mt-3">
-                            <img id="photo_preview" src="{{isset($staff) ? asset('storage/' . $staff->photo_path) : ''}}" alt="Photo Preview" style="{{isset($staff->photo_path) ?? 'display:block'}}">
+                            <img id="photo_preview" src="{{isset($staff) ? asset('storage/' . $staff->photo_path) : ''}}" alt="Photo Preview" style="{{isset($staff->photo_path) ? 'display:block' : 'display:none'}}">
                         </div>
                     </div>
                 </div>

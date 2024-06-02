@@ -36,6 +36,16 @@
         <form action="">
           <div class="mb-3">
             <input type="search" class="form-control" name="search" id="search" placeholder="Search By EMPID..." value="{{isset($search) ? $search : ''}}">
+            <div class="row">
+              <div class="col-6">
+                <label for="start_date">Start Date</label>
+                <input type="date" class="form-control" name="start_date" id="start_date" value="{{isset($startDate) ? $startDate : ''}}">
+              </div>
+              <div class="col-6">
+                  <label for="end_date">End Date</label>
+                  <input type="date" class="form-control" name="end_date" id="end_date" value="{{isset($end_date) ? $end_date : ''}}">
+              </div>
+            </div>
             <button class="mt-2 btn btn-primary">Search</button>
             <a href="{{route('staffs.view')}}">
               <button class="mt-2 btn btn-primary" type="button">Reset</button>
@@ -49,13 +59,21 @@
               <button class="btn btn-primary">Add</button>
             </a>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-10">
+            <form action="{{ route('staffs.downloadFilteredPdf') }}" method="GET" target="_blank">
+              <input type="hidden" name="start_date" value="{{isset($startDate) ? $startDate : ''}}">
+              <input type="hidden" name="end_date" value="{{isset($end_date) ? $end_date : ''}}">
+              <button class="btn btn-info">Download Filtered PDF</button>
+            </form>
+          </div>
           <div class="col-2 mb-3">
             <a href="{{route('export.staff')}}">
               <button class="btn btn-primary">Export All In CSV</button>
             </a>
           </div>
         </div>
-        
         <div class="table table-responsive">
             <table class="table table-bordered">
                 <thead class="table-light">

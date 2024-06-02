@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Staff;
+use App\Models\Religion;
 use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\StaffExport;
@@ -11,9 +12,10 @@ use App\Exports\StaffExport;
 class StaffController extends Controller
 {
     public function index() {
+        $religions = Religion::all();
         $url = url('/staff');
-        $data = compact('url');
-        return view('staff')->with($data);
+        $data = compact('url','religions');
+        return view('staff',)->with($data);
     }
 
     public function store(Request $request) {
@@ -46,12 +48,20 @@ class StaffController extends Controller
 
     public function view(Request $request) {
         $search = $request['search'] ?? '';
+        $startDate = $request['start_date'] ?? '';
+        $endDate = $request['end_date'] ?? '';
+        $query = Staff::query();
+
         if ($search != '') {
             $staffs = Staff::where('worker_no', 'LIKE', "%$search%")->get();
+        } elseif ($startDate && $endDate) {
+            $query->whereBetween('date_of_entry', [$startDate, $endDate]);
+            $staffs = $query->get();
         } else {
             $staffs = Staff::all();
         }
-        $data = compact('staffs','search');
+
+        $data = compact('staffs', 'search', 'startDate', 'endDate');
         return view('staff-listings')->with($data);  
     }
 
@@ -64,12 +74,13 @@ class StaffController extends Controller
     }
 
     public function edit($id) {
+        $religions = Religion::all();
         $staff = Staff::find($id);
         if(is_null($staff)) {
             return redirect('staff-listings');
         } else {
             $url = url('/staff/update/') . '/' . $id;
-            $data = compact('staff','url');
+            $data = compact('staff','url','religions');
             return view('staff')->with($data);
         }
     }
@@ -128,5 +139,20 @@ class StaffController extends Controller
             return redirect()->route('staffs.view');
         }
         return Excel::download(new StaffExport($staff), 'all_staff.xlsx');
+    }
+
+    public function downloadFilteredPdf(Request $request) {
+        $startDate = $request['start_date'] ?? '';
+        $endDate = $request['end_date'] ?? '';
+
+        $query = Staff::query();
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('date_of_entry', [$startDate, $endDate]);
+        }
+
+        $staffs = $query->get();
+        $pdf = PDF::loadView('staffs.pdf', compact('staffs'));
+        return $pdf->download('filtered_staff_list.pdf');
     }
 }

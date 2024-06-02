@@ -48,11 +48,16 @@
             font-size: 18px;
             background-color: #f8e6e6;
         }
+        table.table-bordered > thead > tr > th,
+        table.table-bordered > tbody > tr > td,
+        table.table-bordered > tfoot > tr > td {
+            border: 1px solid white; /* White border */
+        }
     </style>
 </head>
 <body>
     <div class="page">
-        <table>
+        <table class="table table-bordered">
             <tr>
                 <td colspan="8" class="full-width-row">RDB TEXTILES LIMITED</td>
             </tr>

@@ -48,20 +48,23 @@ class StaffController extends Controller
 
     public function view(Request $request) {
         $search = $request['search'] ?? '';
-        $startDate = $request['start_date'] ?? '';
-        $endDate = $request['end_date'] ?? '';
+        $start_date = $request['start_date'] ?? '';
+        $end_date = $request['end_date'] ?? '';
         $query = Staff::query();
 
         if ($search != '') {
             $staffs = Staff::where('worker_no', 'LIKE', "%$search%")->get();
-        } elseif ($startDate && $endDate) {
-            $query->whereBetween('date_of_entry', [$startDate, $endDate]);
+        } elseif ($start_date && $end_date) {
+            $query->whereBetween('date_of_entry', [$start_date, $end_date]);
+            $staffs = $query->get();
+        } elseif ($start_date) {
+            $query->where('date_of_entry', '>=', $start_date);
             $staffs = $query->get();
         } else {
             $staffs = Staff::all();
         }
 
-        $data = compact('staffs', 'search', 'startDate', 'endDate');
+        $data = compact('staffs', 'search', 'start_date', 'end_date');
         return view('staff-listings')->with($data);  
     }
 
@@ -149,6 +152,8 @@ class StaffController extends Controller
 
         if ($startDate && $endDate) {
             $query->whereBetween('date_of_entry', [$startDate, $endDate]);
+        } else {
+            $query->where('date_of_entry', '>=', $startDate);
         }
 
         $staffs = $query->get();

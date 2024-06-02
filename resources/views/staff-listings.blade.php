@@ -39,7 +39,7 @@
             <div class="row">
               <div class="col-6">
                 <label for="start_date">Start Date</label>
-                <input type="date" class="form-control" name="start_date" id="start_date" value="{{isset($startDate) ? $startDate : ''}}">
+                <input type="date" class="form-control" name="start_date" id="start_date" value="{{isset($start_date) ? $start_date : ''}}">
               </div>
               <div class="col-6">
                   <label for="end_date">End Date</label>
@@ -63,9 +63,9 @@
         <div class="row">
           <div class="col-10">
             <form action="{{ route('staffs.downloadFilteredPdf') }}" method="GET" target="_blank">
-              <input type="hidden" name="start_date" value="{{isset($startDate) ? $startDate : ''}}">
+              <input type="hidden" name="start_date" value="{{isset($start_date) ? $start_date : ''}}">
               <input type="hidden" name="end_date" value="{{isset($end_date) ? $end_date : ''}}">
-              <button class="btn btn-info">Download Filtered PDF</button>
+              <button class="btn btn-info">Download Report</button>
             </form>
           </div>
           <div class="col-2 mb-3">
@@ -103,15 +103,15 @@
                       <td>{{\Carbon\Carbon::now()->year - \Carbon\Carbon::parse($staff->date_of_birth)->year}}</td>
                       <td>
                         <a href="{{route('staff.edit', ['id' => $staff->id])}}">
-                          <button class="btn btn-primary">Edit</button>
+                          <button class="btn btn-primary mb-2">Edit</button>
                         </a>
                         <a href="{{route('staff.delete', ['id' => $staff->id])}}">
-                          <button class="btn btn-danger">Delete</button>
+                          <button class="btn btn-danger mb-2">Delete</button>
                         </a>
                       </td>
                       <td>
-                      <a href="{{ route('staff.downloadPdf', $staff->id) }}" class="btn btn-info">Download PDF</a>
-                      <a href="{{ route('staff.downloadExcel', $staff->id) }}" class="btn btn-info">Download Excel</a>
+                      <a href="{{ route('staff.downloadPdf', $staff->id) }}" class="btn btn-info mb-2">Download PDF</a>
+                      <a href="{{ route('staff.downloadExcel', $staff->id) }}" class="btn btn-info mb-2">Download Excel</a>
                       </td>
                     </tr>
                   @endforeach()

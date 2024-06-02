@@ -21,10 +21,10 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->date('date_of_joining');
             $table->date('permanent_date');
-            $table->date('retirement_date');
+            $table->date('retirement_date')->nullable();
             $table->enum('nationality',['indian','other']);
             $table->string('religion');
-            $table->date('anniv_date');
+            $table->date('anniv_date')->nullable();
             $table->string('esi_no');
             $table->string('pf_no');
             $table->text('present_address')->nullable();

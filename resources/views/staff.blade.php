@@ -110,7 +110,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="retirement_date" class="form-label">Retirement Date</label>
-                        <input type="date" class="form-control" id="retirement_date" name="retirement_date" value="{{isset($staff) ? $staff->retirement_date : ''}}" required>
+                        <input type="date" class="form-control" id="retirement_date" name="retirement_date" value="{{isset($staff) ? $staff->retirement_date : ''}}">
                     </div>
                     <div class="mb-3">
                         <label for="nationality" class="form-label">Nationality</label>
@@ -131,7 +131,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="anniv_date" class="form-label">Anniversary Date</label>
-                        <input type="date" class="form-control" id="anniv_date" name="anniv_date" value="{{isset($staff) ? $staff->anniv_date : ''}}" required>
+                        <input type="date" class="form-control" id="anniv_date" name="anniv_date" value="{{isset($staff) ? $staff->anniv_date : ''}}">
                     </div>
                 </div>
                 <div class="col-md-6">

@@ -13,7 +13,7 @@ class StaffExport implements FromCollection, WithHeadings, WithMapping
 
     public function __construct($staff)
     {
-        $this->staff = $staff;
+        $this->staff = $staff instanceof \Illuminate\Database\Eloquent\Collection ? $staff : collect([$staff]);
     }
 
     public function collection()
